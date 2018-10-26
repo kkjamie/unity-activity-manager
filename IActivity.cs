@@ -1,8 +1,8 @@
 ﻿namespace UnityActivityManager
 {
-	public interface IActivity<TActivityArgs>
+	public interface IActivity<TInitArgs>
 	{
-		void Init(TActivityArgs levelName);
+		void Init(TInitArgs initArgs);
 	}
 
 	public interface IActivity
