@@ -1,4 +1,6 @@
-﻿namespace UnityActivityManager.Transitions
+﻿using System.Dynamic;
+
+namespace UnityActivityManager.Transitions
 {
 	public class LoadingTransition : IActivityTransition
 	{
@@ -13,7 +15,11 @@
 			{
 				a.LoadActivity(() =>
 				{
-					controller.SendMessage<ITransitionCompleteHandler>(h => h.HandleTransitionComplete());
+					controller.SendMessage<ITransitionCompleteHandler>(h =>
+					{
+						h.HandleTransitionComplete();
+						controller.NotifyTransitionComplete();
+					});
 				});
 			});
 		}
