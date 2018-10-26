@@ -6,6 +6,7 @@
 		{
 			controller.EndCurrentActivity();
 			controller.StartNewActivity();
+			controller.NotifyTransitionComplete();
 		}
 	}
 }

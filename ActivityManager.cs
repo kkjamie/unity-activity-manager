@@ -15,7 +15,7 @@ namespace UnityActivityManager
 			}
 		}
 		private static ActivityManager instance;
-
+		private bool transitionInProgress = false;
 		private GameObject currentActivity;
 		private TransitionController transitionController;
 
@@ -43,6 +43,11 @@ namespace UnityActivityManager
 		private void SwitchActivityInternal<TActivity>(Action<TActivity> initActivity, IActivityTransition transition)
 			where TActivity : Component
 		{
+			if (transitionInProgress)
+			{
+				throw new Exception("Cannot SwitchActivity, there is an activity transition already in progress.");
+			}
+
 			Action startActivity = () =>
 			{
 				var newActivity = new GameObject(typeof(TActivity).Name).AddComponent<TActivity>();
@@ -56,7 +61,9 @@ namespace UnityActivityManager
 				transition = new InstantActivityTransition();
 			}
 
+			transitionInProgress = true;
 			transitionController.StartActivityFunc = startActivity;
+			transitionController.OnComplete = () => transitionInProgress = false;
 			transition.Start(transitionController);
 		}
 
@@ -73,12 +80,13 @@ namespace UnityActivityManager
 		{
 			private readonly ActivityManager activityManager;
 
+			public Action StartActivityFunc { private get; set; }
+			public Action OnComplete { private get; set; }
+
 			public TransitionController(ActivityManager activityManager)
 			{
 				this.activityManager = activityManager;
 			}
-
-			public Action StartActivityFunc { get; set; }
 
 			void IActivityTransitionController.EndCurrentActivity()
 			{
@@ -97,6 +105,11 @@ namespace UnityActivityManager
 				{
 					executeMessage(obj);
 				}
+			}
+
+			public void NotifyTransitionComplete()
+			{
+				if (OnComplete != null) OnComplete();
 			}
 		}
 	}

@@ -7,5 +7,6 @@ namespace UnityActivityManager
 		void EndCurrentActivity();
 		void StartNewActivity();
 		void SendMessage<T>(Action<T> execute);
+		void NotifyTransitionComplete();
 	}
 }
