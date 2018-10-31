@@ -1,0 +1,10 @@
+{
+    "name": "UnityActivityManager",
+    "references": [],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Editor"
+    ],
+    "allowUnsafeCode": false
+}
