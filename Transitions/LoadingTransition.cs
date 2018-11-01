@@ -18,8 +18,9 @@ namespace UnityActivityManager.Transitions
 					controller.SendMessage<ITransitionCompleteHandler>(h =>
 					{
 						h.HandleTransitionComplete();
-						controller.NotifyTransitionComplete();
 					});
+
+					controller.NotifyTransitionComplete();
 				});
 			});
 		}
