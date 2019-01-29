@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityActivityManager.Transitions;
 using UnityEngine;
 
 namespace UnityActivityManager
