@@ -1,12 +1,18 @@
-﻿namespace UnityActivityManager
+﻿using System;
+using UnityEngine;
+
+namespace UnityActivityManager
 {
-	public interface IActivity<TInitArgs>
-	{
-		void Init(TInitArgs initArgs);
-	}
 
 	public interface IActivity
 	{
-		void Init();
+		GameObject gameObject { get; }
+		void Exit(Action onComplete);
+		void Enter();
+	}
+
+	public interface IActivity<TInitArgs> : IActivity
+	{
+		void Enter(TInitArgs initArgs);
 	}
 }
