@@ -58,10 +58,18 @@ namespace UnityActivityManager
 
 			Action<Action> endActivity = onComplete =>
 			{
-				currentActivity.Exit(() => {
-					Destroy(currentActivity.gameObject);
+				if (currentActivity != null)
+				{
+					currentActivity.Exit(() =>
+					{
+						Destroy(currentActivity.gameObject);
+						onComplete();
+					});
+				}
+				else
+				{
 					onComplete();
-				});
+				}
 			};
 
 			Action startActivity = () =>
